@@ -12,10 +12,21 @@ public class CalcActivity extends Activity {
     //Declares the text view
     TextView txtResult;
 
+    //Creating enum for operations
+    public enum Operation {
+        ADD, SUBTRACT, DIVIDE, MULTIPLY, EQUAL
+    }
+
     //All global string values
     String runningNumber = "";
     String leftStringValue = "";
     String rightStringValue = "";
+
+    //Declaring the end result
+    int result = 0;
+
+    //Declaring the current operation
+    Operation currentOperation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,28 +135,28 @@ public class CalcActivity extends Activity {
         btnAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                processOperation(Operation.ADD);
             }
         });
 
         btnSubtract.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                processOperation(Operation.SUBTRACT);
             }
         });
 
         btnMultiply.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                processOperation(Operation.MULTIPLY);
             }
         });
 
         btnDivide.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                processOperation(Operation.DIVIDE);
             }
         });
 
@@ -162,6 +173,48 @@ public class CalcActivity extends Activity {
 
             }
         });
+    }
+
+    void processOperation(Operation operation){
+        //Checks if there was a previous operation
+        if (currentOperation != null){
+            //Checks if there is actually numbers being processed
+            if (runningNumber != ""){
+                //Stores the current onscreen val
+                rightStringValue = runningNumber;
+                //Prepares the var to have a new val
+                runningNumber = "";
+
+                switch (currentOperation){
+                    //Operation to add the values
+                    case ADD:
+                        result = Integer.parseInt(leftStringValue) + Integer.parseInt(rightStringValue);
+                        break;
+                    //Operation to subtract the values
+                    case SUBTRACT:
+                        result = Integer.parseInt(leftStringValue) - Integer.parseInt(rightStringValue);
+                        break;
+                    //Operation to multiply the values
+                    case MULTIPLY:
+                        result = Integer.parseInt(leftStringValue) * Integer.parseInt(rightStringValue);
+                        break;
+                    //Operation to divide the values
+                    case DIVIDE:
+                        result = Integer.parseInt(leftStringValue) / Integer.parseInt(rightStringValue);
+                        break;
+                }
+                //Converts result into string and save to leftStringValue
+                leftStringValue = String.valueOf(result);
+                txtResult.setText(leftStringValue);
+            }
+        } else {
+            //First time pressing an operator
+            leftStringValue = runningNumber;
+            runningNumber = "";
+        }
+
+        //updates the current operation with the one selected
+        currentOperation = operation;
     }
 
     //Stores the number on the screen
