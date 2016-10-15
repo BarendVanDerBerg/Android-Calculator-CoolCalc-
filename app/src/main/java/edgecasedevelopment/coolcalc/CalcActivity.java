@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 public class CalcActivity extends Activity {
 
     //Declares the text view
@@ -163,14 +165,20 @@ public class CalcActivity extends Activity {
         btnCalc.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                processOperation(Operation.EQUAL);
             }
         });
 
         btnClear.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
+                //Sets the calculator and all its values to empty/null
+                leftStringValue = "";
+                rightStringValue = "";
+                result = 0;
+                runningNumber = "";
+                currentOperation = null;
+                txtResult.setText("0");
             }
         });
     }
@@ -179,7 +187,7 @@ public class CalcActivity extends Activity {
         //Checks if there was a previous operation
         if (currentOperation != null){
             //Checks if there is actually numbers being processed
-            if (runningNumber != ""){
+            if (!Objects.equals(runningNumber, "")){
                 //Stores the current onscreen val
                 rightStringValue = runningNumber;
                 //Prepares the var to have a new val
