@@ -230,4 +230,5 @@ public class CalcActivity extends Activity {
         runningNumber += String.valueOf(number);
         txtResult.setText(runningNumber);
     }
+
 }
