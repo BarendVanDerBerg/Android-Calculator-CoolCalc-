@@ -15,6 +15,7 @@ public class CalcActivity extends Activity {
     //All global string values
     String runningNumber = "";
     String leftStringValue = "";
+    String rightStringValue = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
